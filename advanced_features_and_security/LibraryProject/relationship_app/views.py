@@ -1,21 +1,23 @@
+from django.http import HttpResponse
 from django.contrib.auth.decorators import permission_required
-from django.shortcuts import HttpResponse
+from .models import Book
 
 
-@permission_required("relationship_app.can_add_book", raise_exception=True)
+@permission_required('relationship_app.can_view', raise_exception=True)
+def view_books(request):
+    return HttpResponse("Viewing books")
+
+
+@permission_required('relationship_app.can_create', raise_exception=True)
 def add_book(request):
-    return HttpResponse("Book added successfully")
+    return HttpResponse("Adding book")
 
 
-@permission_required("relationship_app.can_change_book", raise_exception=True)
+@permission_required('relationship_app.can_edit', raise_exception=True)
 def edit_book(request, book_id):
-    return HttpResponse("Book updated successfully")
+    return HttpResponse("Editing book")
 
 
-@permission_required("relationship_app.can_delete_book", raise_exception=True)
+@permission_required('relationship_app.can_delete', raise_exception=True)
 def delete_book(request, book_id):
-    return HttpResponse("Book deleted successfully")
-
-relationship_app.can_add_book
-relationship_app.can_change_book
-relationship_app.can_delete_book
+    return HttpResponse("Deleting book")
